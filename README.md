@@ -52,6 +52,17 @@ If the directory doesn't exist, it will be created automatically or otherwise cl
 
 Default folder: <code>screenshots</code>
 
+### Inline images (optional)
+
+Enabling inline images will create the html image tags with base64 encoding inline, removing the need to have a separate screenshot directory
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   savePath: './test/reports/',
+   inlineImages: true
+}));</code></pre>
+
+Default is <code>false</code>
+
 ### Take screenshots (optional)
 
 When this option is enabled, reporter will create screenshots for specs.

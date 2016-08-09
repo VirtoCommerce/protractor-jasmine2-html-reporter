@@ -79,7 +79,8 @@ function Jasmine2HTMLReporter(options) {
     self.takeScreenshots = options.takeScreenshots === UNDEFINED ? true : options.takeScreenshots;
     self.savePath = options.savePath || '';
     self.takeScreenshotsOnlyOnFailures = options.takeScreenshotsOnlyOnFailures === UNDEFINED ? false : options.takeScreenshotsOnlyOnFailures;
-    self.screenshotsFolder = (options.screenshotsFolder || 'screenshots').replace(/^\//, '') + '/';
+    self.inlineImages = options.inlineImages || '';
+    self.screenshotsFolder = options.inlineImages ? '' : (options.screenshotsFolder || 'screenshots').replace(/^\//, '') + '/';
     self.useDotNotation = options.useDotNotation === UNDEFINED ? true : options.useDotNotation;
     self.fixedScreenshotName = options.fixedScreenshotName === UNDEFINED ? false : options.fixedScreenshotName;
     self.consolidate = options.consolidate === UNDEFINED ? true : options.consolidate;
@@ -160,18 +161,22 @@ function Jasmine2HTMLReporter(options) {
 
             browser.takeScreenshot().then(function (png) {
                 browser.getCapabilities().then(function (capabilities) {
-                    var screenshotPath;
+                    if(self.inlineImages) {
+                        spec.screenshot = 'data:image/png;base64,' + png;
+                    } else {
+                        var screenshotPath;
 
 
-                    //Folder structure and filename
-                    screenshotPath = path.join(self.savePath + self.screenshotsFolder, spec.screenshot);
+                        //Folder structure and filename
+                        screenshotPath = path.join(self.savePath + self.screenshotsFolder, spec.screenshot);
 
-                    mkdirp(path.dirname(screenshotPath), function (err) {
-                        if (err) {
-                            throw new Error('Could not create directory for ' + screenshotPath);
-                        }
-                        writeScreenshot(png, screenshotPath);
-                    });
+                        mkdirp(path.dirname(screenshotPath), function (err) {
+                            if (err) {
+                                throw new Error('Could not create directory for ' + screenshotPath);
+                            }
+                            writeScreenshot(png, screenshotPath);
+                        });
+                    }                    
                 });
             });
         }
