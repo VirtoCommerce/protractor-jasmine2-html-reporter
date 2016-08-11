@@ -2,7 +2,8 @@ var fs     = require('fs'),
     mkdirp = require('mkdirp'),
     _      = require('lodash'),
     path   = require('path'),
-    hat    = require('hat');
+    hat    = require('hat'),
+    q      = require('q');
 
 require('string.prototype.startswith');
 
@@ -71,6 +72,7 @@ function rmdir(dir) {
 function Jasmine2HTMLReporter(options) {
 
     var self = this;
+    var deferred;
 
     self.started = false;
     self.finished = false;
@@ -155,14 +157,15 @@ function Jasmine2HTMLReporter(options) {
         if ((self.takeScreenshots && !self.takeScreenshotsOnlyOnFailures) ||
             (self.takeScreenshots && self.takeScreenshotsOnlyOnFailures && isFailed(spec))) {
             if (!self.fixedScreenshotName)
-                spec.screenshot = hat() + '.png';
+                spec.screenshot = hat() + '.png';            
             else
                 spec.screenshot = sanitizeFilename(spec.description) + '.png';
-
+            
+            deferred = q.defer();
             browser.takeScreenshot().then(function (png) {
                 browser.getCapabilities().then(function (capabilities) {
                     if(self.inlineImages) {
-                        spec.screenshot = 'data:image/png;base64,' + png;
+                        spec.screenshot = 'data:image/png;base64,' + png;                         
                     } else {
                         var screenshotPath;
 
@@ -176,10 +179,11 @@ function Jasmine2HTMLReporter(options) {
                             }
                             writeScreenshot(png, screenshotPath);
                         });
-                    }                    
+                    }
+                    deferred.resolve(true);
                 });
             });
-        }
+        }      
 
 
     };
@@ -193,24 +197,26 @@ function Jasmine2HTMLReporter(options) {
         currentSuite = suite._parent;
     };
     self.jasmineDone = function() {
-        if (currentSuite) {
-            // focused spec (fit) -- suiteDone was never called
-            self.suiteDone(fakeFocusedSuite);
-        }
+        waitForPromise(function() {
+            if (currentSuite) {
+                // focused spec (fit) -- suiteDone was never called
+                self.suiteDone(fakeFocusedSuite);
+            }
+            
+            var output = '';
+            for (var i = 0; i < suites.length; i++) {            
+                output += self.getOrWriteNestedOutput(suites[i]);            
+            }
+            // if we have anything to write here, write out the consolidated file
+            if (output) {
+                wrapOutputAndWriteFile(self.filePrefix, output);
+            }
+            //log("Specs skipped but not reported (entire suite skipped or targeted to specific specs)", totalSpecsDefined - totalSpecsExecuted + totalSpecsDisabled);
 
-        var output = '';
-        for (var i = 0; i < suites.length; i++) {
-            output += self.getOrWriteNestedOutput(suites[i]);
-        }
-        // if we have anything to write here, write out the consolidated file
-        if (output) {
-            wrapOutputAndWriteFile(self.filePrefix, output);
-        }
-        //log("Specs skipped but not reported (entire suite skipped or targeted to specific specs)", totalSpecsDefined - totalSpecsExecuted + totalSpecsDisabled);
-
-        self.finished = true;
-        // this is so phantomjs-testrunner.js can tell if we're done executing
-        exportObject.endTime = new Date();
+            self.finished = true;
+            // this is so phantomjs-testrunner.js can tell if we're done executing
+            exportObject.endTime = new Date();
+        });                    
     };
 
     self.getOrWriteNestedOutput = function(suite) {
@@ -319,6 +325,18 @@ function Jasmine2HTMLReporter(options) {
         }
         return html;
     }
+     
+    function waitForPromise(callback) {
+        // register callback on the queue to be called after completion of current event loop
+        // this will allow the screenshot promise to resolve
+        setImmediate(function() {
+            if(!deferred || deferred.promise.isFulfilled()) {
+                callback();
+            } else {
+                waitForPromise(callback);
+            }
+        });
+    }    
 
     self.writeFile = function(filename, text) {
         var errors = [];
@@ -365,7 +383,7 @@ function Jasmine2HTMLReporter(options) {
     var suffix = '\n</section></body></html>';
     function wrapOutputAndWriteFile(filename, text) {
         if (filename.substr(-5) !== '.html') { filename += '.html'; }
-        self.writeFile(filename, (prefix + text + suffix));
+        self.writeFile(filename, (prefix + text + suffix));        
     }
 
     return this;
