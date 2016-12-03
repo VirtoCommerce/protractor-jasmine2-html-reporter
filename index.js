@@ -82,6 +82,7 @@ function Jasmine2HTMLReporter(options) {
     self.savePath = options.savePath || '';
     self.takeScreenshotsOnlyOnFailures = options.takeScreenshotsOnlyOnFailures === UNDEFINED ? false : options.takeScreenshotsOnlyOnFailures;
     self.inlineImages = options.inlineImages || '';
+    self.screenshotsUrl = options.inlineImages ? '' : options.screenshotsUrl + '/';
     self.screenshotsFolder = options.inlineImages ? '' : (options.screenshotsFolder || 'screenshots').replace(/^\//, '') + '/';
     self.useDotNotation = options.useDotNotation === UNDEFINED ? true : options.useDotNotation;
     self.fixedScreenshotName = options.fixedScreenshotName === UNDEFINED ? false : options.fixedScreenshotName;
@@ -110,6 +111,9 @@ function Jasmine2HTMLReporter(options) {
         return __specs[spec.id];
     }
 
+    self.getScreenshotPrefix = function() {
+        return self.screenshotsUrl ? self.screenshotsUrl : self.screenshotsFolder;
+    };
     self.jasmineStarted = function(summary) {
         totalSpecsDefined = summary && summary.totalSpecsDefined || NaN;
         exportObject.startTime = new Date();
@@ -290,8 +294,8 @@ function Jasmine2HTMLReporter(options) {
             html += specAsHtml(spec);
                 html += '<div class="resume">';
                 if (spec.screenshot !== UNDEFINED){
-                    html += '<a href="' + self.screenshotsFolder + spec.screenshot + '">';
-                    html += '<img src="' + self.screenshotsFolder + spec.screenshot + '" width="100" height="100" />';
+                    html += '<a href="' + self.getScreenshotPrefix() + spec.screenshot + '">';
+                    html += '<img src="' + self.getScreenshotPrefix() + spec.screenshot + '" width="100" height="100" />';
                     html += '</a>';
                 }
                 html += '<br />';

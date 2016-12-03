@@ -63,6 +63,18 @@ Enabling inline images will create the html image tags with base64 encoding inli
 
 Default is <code>false</code>
 
+### Screenshots url (optional)
+
+By default image url for screenshots is relative path. When this option is set, reporter will pick it for image url generation.
+When inlineImages option is enabled, this option will be ignored. 
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   savePath: './test/reports/',
+   screenshotsUrl: 'http://my-azure-blob-storage/screenshots-for-tests'
+}));</code></pre>
+
+Default value: <code>''</code>
+
 ### Take screenshots (optional)
 
 When this option is enabled, reporter will create screenshots for specs.
