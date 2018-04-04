@@ -4,7 +4,7 @@
     "description": "HTML reporter for Jasmine2 and Protractor",
     "main": "index.js",
     "scripts": {
-        "postinstall": "node node_modules/protractor/bin/webdriver-manager update",
+        "postinstall": "webdriver-manager update",
         "test": "protractor protractor.config.js"
     },
     "repository": {

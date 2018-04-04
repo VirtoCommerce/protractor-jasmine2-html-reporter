@@ -7,7 +7,7 @@ exports.config = {
     },
     framework: 'jasmine2',
 
-    //directConnect: true,
+    directConnect: true,
 
     specs: ['test/**/*[sS]pec.js'],
 
