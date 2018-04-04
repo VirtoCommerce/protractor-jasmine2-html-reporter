@@ -3,6 +3,7 @@
 
 HTML reporter for Jasmine2 and Protractor that will include screenshots of each test if you want.
 This work is inspired by:
+* [protractor-jasmine2-html-reporter](https://www.npmjs.com/package/protractor-jasmine2-html-reporter) from [@Kenzitron](https://github.com/Kenzitron) and its forks from [@dvs39](https://github.com/dvs39) and [@Brent Pendergraft](https://github.com/penDerGraft)
 * [Protractor Jasmine 2 Screenshot Reporter](https://github.com/mlison/protractor-jasmine2-screenshot-reporter) from [@mslison](https://github.com/mlison)
 * [Jasmine Reporters](https://github.com/larrymyers/jasmine-reporters) from [@larrymyers](https://github.com/larrymyers)
 
