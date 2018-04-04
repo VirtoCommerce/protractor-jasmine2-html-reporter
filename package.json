@@ -4,7 +4,7 @@
     "description": "HTML reporter for Jasmine2 and Protractor",
     "main": "index.js",
     "scripts": {
-        "postinstall": "webdriver-manager update",
+        "postinstall": "node node_modules/protractor/bin/webdriver-manager update",
         "test": "protractor protractor.config.js"
     },
     "repository": {
@@ -12,6 +12,7 @@
         "url": "https://github.com/VirtoCommerce/protractor-jasmine2-html-reporter"
     },
     "keywords": [
+        "jasmine",
         "jasmine2",
         "protractor",
         "reporter",
@@ -26,21 +27,25 @@
     "author": "Alejandro Asensio <alejandro@kenzilab.com> (http://www.kenzilab.com/)",
     "contributors": [
         "VirtoCommerce <support@virtocommerce.com> (http://virtocommerce.com/)",
-        "Aleksandr Vishniakov <av@virtoway.com>"
+        "Aleksandr Vishniakov <av@virtoway.com>",
+        "Calin Fraser <calinfraser@gmail.com> (https://github.com/kaliayev)",
+        "Vasanth K <vasanth.k@perfomatix.com> (https://github.com/vasanth5738)",
+        "Chris Rudmin (https://github.com/chris-rudmin)"
     ],
     "license": "BSD-2-Clause",
     "bugs": {
         "url": "https://github.com/VirtoCommerce/protractor-jasmine2-html-reporter/issues"
     },
     "dependencies": {
+        "async": "^2.1.4",
         "hat": "0.0.3",
-        "lodash": "^4.0.0",
+        "lodash": "^4.17.0",
         "mkdirp": "^0.5.0",
         "q": "^1.4.1",
         "string.prototype.startswith": "^0.2.0"
     },
     "devDependencies": {
-        "jasmine": "^2.4.1",
-        "protractor": "^3.1.1"
+        "jasmine": "^2.5.2",
+        "protractor": "^5.3.0"
     }
 }

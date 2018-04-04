@@ -116,18 +116,96 @@ Filename for html report.
 
 <pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
    savePath: './test/reports/',
-   filePrefix: 'index'
+   fileNamePrefix: 'Prefix'
 }));</code></pre>
 
-Default is <code>htmlReport.html</code>
+Default is <code>nothing</code>
 
 ### Consolidate and ConsolidateAll (optional)
 
-This option allow you to create diferent HTML for each test suite.
+This option allow you to create a single file for each reporter.
 
 <pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-   consolidate: true,
-   consolidateAll: true
+   consolidate: false,
+   consolidateAll: false
+}));</code></pre>
+
+Default is <code>true</code>
+
+### CleanDestination (optional)
+
+This option, if false, will not delete the reports or screenshots before each test run. 
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   savePath: './test/reports/',
+   cleanDestination: false
+}));</code></pre>
+
+Default is <code>true</code>
+
+### showPassed (optional)
+
+This option, if false, will show only failures. 
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   ....
+   showPassed: false
+}));</code></pre>
+
+Default is <code>true</code>
+
+### fileName (optional)
+
+This will be the name used for the html file generated thanks to this tool.
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   ....
+   fileName: 'MyReportName'
+}));</code></pre>
+
+Default is <code>htmlReport</code>
+
+### fileNameSeparator (optional)
+
+This will set the separator between filename elements, for example, prefix, sufix etc.
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   ....
+   fileNameSeparator: '_'
+}));</code></pre>
+
+Default is <code>-</code>
+
+### fileNamePrefix (optional)
+
+Prefix used before the name of the report
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   ....
+   fileNamePrefix: ''
+}));</code></pre>
+
+Default is <code>empty</code>
+
+### fileNameSuffix (optional)
+
+Suffix used after the name of the report
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   ....
+   fileNameSuffix: ''
+}));</code></pre>
+
+Default is <code>empty</code>
+
+### fileNameDateSuffix (optional)
+
+Datetime information to be added in the name of the report. This will be placed after the fileNameSuffix if it exists.
+The format is: YYYYMMDD HHMMSS,MILL -> 20161230 133323,728
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   ....
+   fileNameDateSuffix: true
 }));</code></pre>
 
 Default is <code>false</code>
