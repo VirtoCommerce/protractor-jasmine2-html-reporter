@@ -1,6 +1,6 @@
 {
-    "name": "vc-protractor-jasmine2-html-reporter",
-    "version": "0.0.1",
+    "name": "@virtocommerce/protractor-jasmine2-html-reporter",
+    "version": "1.0.0",
     "description": "HTML reporter for Jasmine2 and Protractor",
     "main": "index.js",
     "scripts": {
