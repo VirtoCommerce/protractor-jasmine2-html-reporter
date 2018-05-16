@@ -1,6 +1,6 @@
 {
     "name": "@virtocommerce/protractor-jasmine2-html-reporter",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "HTML reporter for Jasmine2 and Protractor",
     "main": "index.js",
     "scripts": {
@@ -48,5 +48,6 @@
     "devDependencies": {
         "jasmine": "^2.5.2",
         "protractor": "^5.3.0"
-    }
+    },
+    "engines": { "node": ">=8.0.0" }
 }
