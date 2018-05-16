@@ -10,11 +10,11 @@ This work is inspired by:
 ## Usage
 The <code>protractor-jasmine2-html-reporter</code> is available via npm:
 
-<code>$ npm install protractor-jasmine2-html-reporter --save-dev</code>
+<code>$ npm install @virtocommerce/protractor-jasmine2-html-reporter</code>
 
 In your Protractor configuration file, register protractor-jasmine2-html-reporter in jasmine:
 
-<pre><code>var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
+<pre><code>var Jasmine2HtmlReporter = require('@virtocommerce/protractor-jasmine2-html-reporter');
 
 exports.config = {
    // ...
