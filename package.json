@@ -1,6 +1,6 @@
 {
     "name": "@virtocommerce/protractor-jasmine2-html-reporter",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "HTML reporter for Jasmine2 and Protractor",
     "main": "index.js",
     "scripts": {
@@ -37,12 +37,13 @@
         "url": "https://github.com/VirtoCommerce/protractor-jasmine2-html-reporter/issues"
     },
     "dependencies": {
-        "async": "^2.1.4",
         "hat": "0.0.3",
         "lodash": "^4.17.0",
         "mkdirp": "^0.5.0",
-        "q": "^1.4.1",
-        "string.prototype.startswith": "^0.2.0"
+        "string.prototype.startswith": "^0.2.0",
+        "imagemin": "^5.3.1",
+        "imagemin-pngquant": "^5.1.0",
+        "imagemin-pngout": "^3.0.0"
     },
     "devDependencies": {
         "jasmine": "^2.5.2",

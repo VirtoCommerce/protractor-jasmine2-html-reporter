@@ -64,6 +64,26 @@ Enabling inline images will create the html image tags with base64 encoding inli
 
 Default is <code>false</code>
 
+### Optimize images (optional)
+
+Enabling images optimization will reduce size of images and html page.
+Two nested options supported and both required if image optimization used:
+- `lossy: boolean` - indicate should optimization be lossy or lossless
+- `level: number` - optimization level: the number in `[0..5]` range for lossy and `[0..2]` for lossless; lower is best compression, but worst quality (if lossy), higher is worst compression, but best quality (if lossy); max value is equivalent of uncompressed image.
+
+`PNGQuant` used for lossy compression (`quality: 50%` and `speed: 0` at `0` level, `100%` and `10` at `5`) and `PNGOut` used for lossless compression (`strategy: [2..4]` because `0` and `1` cause time out errors).
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   savePath: './test/reports/',
+   optimizeImages: false
+}));</code></pre>
+
+<pre><code>jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+   savePath: './test/reports/',
+   optimizeImages: { lossy: false, level: 0 }
+}));</code></pre>
+
+Default is <code>{ lossy: true, level: 1 }</code>
+
 ### Screenshots url (optional)
 
 By default image url for screenshots is relative path. When this option is set, reporter will pick it for image url generation.

@@ -2,17 +2,17 @@
 exports.config = {
 
     // Capabilities to be passed to the webdriver instance.
-    capabilities: {
-        'browserName': 'chrome'
-    },
+    multiCapabilities: [
+        { 'browserName': 'chrome' }
+      //{ 'browserName': 'firefox' }
+    ],
     framework: 'jasmine2',
-
-    directConnect: true,
 
     specs: ['test/**/*[sS]pec.js'],
 
-    onPrepare: function() {
-
+    allScriptsTimeout: 50000,
+    defaultTimeoutInterval: 500000,
+    onPrepare: function () {
         return global.browser.getProcessedConfig().then(function (config) {
             var Jasmine2HtmlReporter = require('./index.js');
 
@@ -21,7 +21,6 @@ exports.config = {
                 savePath: './reports/'
             }));
         });
-
-
+        
     }
 };
